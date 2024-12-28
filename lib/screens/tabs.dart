@@ -1,6 +1,7 @@
 import 'package:fitapp/data/dummy_data.dart';
+import 'package:fitapp/models/exercise.dart';
 import 'package:fitapp/screens/categories.dart';
-import 'package:fitapp/screens/exersices.dart';
+import 'package:fitapp/screens/exercises.dart';
 import 'package:flutter/material.dart';
 
 class TabsScreen extends StatefulWidget {
@@ -15,6 +16,20 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   int _selectedPageIndex = 0;
   String activePageTitle = 'Categories';
+  List<Exercise> favoritesList = [];
+
+  void _setFavoriteController(Exercise element) {
+    bool isFavorite = favoritesList.contains(element);
+    if (isFavorite) {
+      setState(() {
+        favoritesList.remove(element);
+      });
+    } else {
+      setState(() {
+        favoritesList.add(element);
+      });
+    }
+  }
 
   void _selectedPage(int index) {
     setState(() {
@@ -26,13 +41,17 @@ class _TabsScreenState extends State<TabsScreen> {
   Widget build(BuildContext context) {
     Widget activePage;
     if (_selectedPageIndex > 0) {
-      activePage = const ExersicesScreen(
-        exercises: dummyExercises,
+      activePage = ExercisesScreen(
+        exercises: favoritesList,
+        setFavoriteController: _setFavoriteController,
+        favoritesList: favoritesList,
       );
       activePageTitle = 'Your Favorites';
     } else {
       activePage = CategoriesScreen(
         categories: dummyCategories,
+        setFavoriteController: _setFavoriteController,
+        favoritesList: favoritesList,
       );
       activePageTitle = 'Categories';
     }

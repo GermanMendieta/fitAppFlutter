@@ -1,19 +1,29 @@
 import 'package:fitapp/models/exercise.dart';
-import 'package:fitapp/widgets/exersices_item.dart';
+import 'package:fitapp/widgets/exercises_item.dart';
 import 'package:flutter/material.dart';
 
-class ExersicesScreen extends StatelessWidget {
-  const ExersicesScreen({super.key, required this.exercises, this.title});
+class ExercisesScreen extends StatelessWidget {
+  const ExercisesScreen({
+    super.key,
+    required this.exercises,
+    this.title,
+    required this.setFavoriteController,
+    required this.favoritesList,
+  });
 
   final List<Exercise> exercises;
   final String? title;
+  final void Function(Exercise) setFavoriteController;
+  final List<Exercise> favoritesList;
 
   @override
   Widget build(BuildContext context) {
     Widget content = ListView.builder(
       itemCount: exercises.length,
-      itemBuilder: (ctx, index) => Exersicesitem(
+      itemBuilder: (ctx, index) => Exercisesitem(
         exercise: exercises[index],
+        setFavoriteController: setFavoriteController,
+        favoritesList: favoritesList,
       ),
     );
 

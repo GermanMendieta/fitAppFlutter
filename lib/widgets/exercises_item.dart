@@ -1,11 +1,32 @@
 import 'package:fitapp/models/exercise.dart';
+import 'package:fitapp/screens/exercise_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class Exersicesitem extends StatelessWidget {
-  const Exersicesitem({super.key, required this.exercise});
+class Exercisesitem extends StatelessWidget {
+  const Exercisesitem({
+    super.key,
+    required this.exercise,
+    required this.setFavoriteController,
+    required this.favoritesList,
+  });
 
   final Exercise exercise;
+  final void Function(Exercise) setFavoriteController;
+  final List<Exercise> favoritesList;
+
+  void openDetailExercise(BuildContext contex, Exercise exerc) {
+    Navigator.push(
+      contex,
+      MaterialPageRoute(
+        builder: (context) => ExerciseDetailScreen(
+          exercise: exercise,
+          setFavoriteController: setFavoriteController,
+          favoritesList: favoritesList,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +38,7 @@ class Exersicesitem extends StatelessWidget {
       child: InkWell(
         onTap: () {
           // open detail of category
+          openDetailExercise(context, exercise);
         },
         child: Stack(
           children: [
@@ -29,7 +51,7 @@ class Exersicesitem extends StatelessWidget {
             ),
             Positioned(
               bottom: 0,
-              left:  0,
+              left: 0,
               right: 0,
               child: Container(
                 padding:
@@ -52,7 +74,7 @@ class Exersicesitem extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Icons of details 
+                        // Icons of details
                       ],
                     )
                   ],
