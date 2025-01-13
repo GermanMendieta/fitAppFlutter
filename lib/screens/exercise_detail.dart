@@ -134,7 +134,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
               const SizedBox(height: 5),
               ExerciseDetailItem(
                 textTitle: 'Duration',
-                textDetail: thisExercise.duration.toString(),
+                textDetail:"${thisExercise.duration.toString()} minutos",
               ),
               const SizedBox(height: 5),
               ExerciseDetailItem(

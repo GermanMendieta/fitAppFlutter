@@ -1,5 +1,6 @@
 import 'package:fitapp/models/exercise.dart';
 import 'package:fitapp/screens/exercise_detail.dart';
+import 'package:fitapp/widgets/item_trait.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -30,6 +31,25 @@ class Exercisesitem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String titleDificult = 'asdasd';
+    IconData complexityIcon;
+    switch (exercise.complexity.name.toString()) {
+      case 'easy':
+        titleDificult = 'Easy';
+        complexityIcon = Icons.eco;
+        break;
+      case 'medium':
+        titleDificult = 'Medium';
+        complexityIcon = Icons.local_fire_department_outlined;
+        break;
+      case 'hard':
+        titleDificult = 'Hard';
+        complexityIcon = Icons.local_fire_department_rounded;
+        break;
+      default:
+        complexityIcon = Icons.time_to_leave;
+    }
+
     return Card(
       margin: const EdgeInsets.all(8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
@@ -55,7 +75,7 @@ class Exercisesitem extends StatelessWidget {
               right: 0,
               child: Container(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 6, horizontal: 44),
+                    const EdgeInsets.symmetric(vertical: 6, horizontal: 24),
                 color: Colors.black54,
                 child: Column(
                   children: [
@@ -71,12 +91,31 @@ class Exercisesitem extends StatelessWidget {
                           color: Colors.white),
                     ),
                     const SizedBox(height: 12),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Icons of details
-                      ],
-                    )
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      ExerciseTrait(
+                        icon: Icons.timer_outlined,
+                        label: "${exercise.duration} min",
+                      ), // time
+                      ExerciseTrait(
+                        icon: complexityIcon,
+                        label: titleDificult,
+                      ),
+                      ExerciseTrait(
+                        icon: Icons.fitness_center_rounded,
+                        label:
+                            exercise.isNoEquipmentNeeded ? "No need" : "Need",
+                      ),
+                      ExerciseTrait(
+                        icon: Icons.replay_rounded,
+                        label: exercise.repetitions,
+                      ),
+                      ExerciseTrait(
+                        icon: Icons.repeat,
+                        label: exercise.repetitions.compareTo('N/A') == 0
+                            ? exercise.sets
+                            : "${exercise.sets} sets",
+                      ),
+                    ])
                   ],
                 ),
               ),
