@@ -1,4 +1,3 @@
-import 'package:fitapp/data/dummy_data.dart';
 import 'package:fitapp/models/category.dart';
 import 'package:fitapp/models/exercise.dart';
 import 'package:fitapp/screens/exercises.dart';
@@ -11,14 +10,16 @@ class CategoriesScreen extends StatelessWidget {
     required this.categories,
     required this.setFavoriteController,
     required this.favoritesList,
+    required this.availableExercise,
   });
 
   final List<Category> categories;
   final void Function(Exercise) setFavoriteController;
   final List<Exercise> favoritesList;
+  final List<Exercise> availableExercise;
 
   void _openCategoryView(BuildContext context, Category selectedCategory) {
-    List<Exercise> exercisesFromCategory = dummyExercises
+    List<Exercise> exercisesFromCategory = availableExercise
         .where(
           (element) => element.categories.contains(selectedCategory.id),
         )
